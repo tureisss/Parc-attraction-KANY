@@ -24,9 +24,11 @@ def add_attraction(data):
 
     return id
 
-def get_all_attraction():
-    json = req.select_from_db("SELECT * FROM attraction")
-    
+def get_all_attraction(only_visible=False):
+    if only_visible:
+        json = req.select_from_db("SELECT * FROM attraction WHERE visible = 1")
+    else:
+        json = req.select_from_db("SELECT * FROM attraction")
     return json
 
 def get_attraction(id):

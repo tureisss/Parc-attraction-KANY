@@ -16,6 +16,7 @@
         <span>{{attraction.description}}</span>
         <span>{{attraction.difficulte}} / 5</span>
       </div>
+      <app-critique [attractionId]="attraction.attraction_id"></app-critique>
     </ng-container>
   </mat-card-content>
 </mat-card>

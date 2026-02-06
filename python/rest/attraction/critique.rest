@@ -1,0 +1,15 @@
+### Ajouter une critique
+POST https://api/critique HTTP/1.1
+Content-Type: application/json
+
+{
+  "attraction_id": 1,
+  "texte": "Super attraction !",
+  "note": 5,
+  "nom": "Dupont",
+  "prenom": "Jean",
+  "anonyme": false
+}
+
+### Récupérer les critiques d'une attraction
+GET https://api/critiques/1 HTTP/1.1

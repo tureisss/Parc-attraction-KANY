@@ -1,0 +1,40 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Critiques</mat-card-title>
+    <button mat-button (click)="toggleForm()">Ajouter une critique</button>
+  </mat-card-header>
+  <mat-card-content>
+    <form *ngIf="showForm" [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Note</mat-label>
+        <mat-select formControlName="note">
+          <mat-option *ngFor="let n of [1,2,3,4,5]" [value]="n">{{n}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Votre avis</mat-label>
+        <textarea matInput formControlName="texte"></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Nom</mat-label>
+        <input matInput formControlName="nom">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Prénom</mat-label>
+        <input matInput formControlName="prenom">
+      </mat-form-field>
+      <mat-checkbox formControlName="anonyme">Anonyme</mat-checkbox>
+      <button mat-stroked-button type="submit">Envoyer</button>
+    </form>
+    <div *ngIf="critiques$ | async as critiques">
+      <div *ngFor="let c of critiques">
+        <strong *ngIf="!c.anonyme">{{c.prenom}} {{c.nom}}</strong>
+        <strong *ngIf="c.anonyme">Anonyme</strong>
+        <span> - Note : {{c.note}}/5</span>
+        <p>{{c.texte}}</p>
+        <hr>
+      </div>
+      <div *ngIf="critiques.length === 0">Aucune critique pour cette attraction.</div>
+    </div>
+  </mat-card-content>
+</mat-card>

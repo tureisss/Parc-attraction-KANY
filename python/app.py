@@ -4,6 +4,20 @@ from flask_cors import CORS
 import request.request as req
 import controller.auth.auth as user
 import controller.attraction as attraction
+import controller.critique.critique as critique
+# Critique
+@app.post('/critique')
+def addCritique():
+    json = request.get_json()
+    retour = critique.add_critique(json)
+    if retour:
+        return jsonify({"message": "Critique ajoutée.", "result": retour}), 200
+    return jsonify({"message": "Erreur lors de l'ajout.", "result": retour}), 500
+
+@app.get('/critiques/<int:attraction_id>')
+def getCritiques(attraction_id):
+    result = critique.get_critiques_by_attraction(attraction_id)
+    return jsonify(result), 200
 
 app = Flask(__name__)
 CORS(app)
@@ -29,7 +43,19 @@ def addAttraction():
 
 @app.get('/attraction')
 def getAllAttraction():
-    result = attraction.get_all_attraction()
+    # Vérifie si l'utilisateur est authentifié (admin)
+    is_admin = False
+    if 'Authorization' in request.headers:
+        token = request.headers['Authorization']
+        if token:
+            token = token.replace('Token ', '').replace('"', '')
+            if user.decode_auth_token(token) == True:
+                is_admin = True
+
+    if is_admin:
+        result = attraction.get_all_attraction()  # toutes les attractions
+    else:
+        result = attraction.get_all_attraction(only_visible=True)  # seulement visibles
     return result, 200
 
 @app.get('/attraction/<int:index>')
