@@ -1,4 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  background-color: #f8f9fa;
+  background-image: radial-gradient(#d1d1d1 0.5px, transparent 0.5px);
+  background-size: 20px 20px; // Petit motif de points discret en fond
+  min-height: 100vh;
+}
+
+mat-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eee;
+}
+
+button.mat-raised-button {
+  background-color: #6200ee; // Violet moderne
+  color: white;
+  border-radius: 8px;
+  padding: 0 24px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+button.mat-raised-button:hover {
+  background-color: #3700b3;
+}

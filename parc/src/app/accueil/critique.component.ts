@@ -8,12 +8,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-critique',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatCardModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule],
+  imports: [CommonModule, ReactiveFormsModule, MatCardModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule, MatIconModule],
   templateUrl: './critique.component.html',
   styleUrl: './critique.component.scss'
 })
@@ -38,7 +39,7 @@ export class CritiqueComponent {
   }
 
   loadCritiques() {
-    if (this.attractionId !== null) {
+    if (this.attractionId !== null && this.attractionId !== undefined) {
       this.critiques$ = this.critiqueService.getCritiques(this.attractionId);
     }
   }
@@ -48,7 +49,7 @@ export class CritiqueComponent {
   }
 
   submit() {
-    if (this.form.valid && this.attractionId !== null) {
+    if (this.form.valid) {
       const critique: Critique = {
         ...this.form.value,
         attraction_id: this.attractionId

@@ -1,16 +1,19 @@
-DROP TABLE IF EXISTS critique;
-DROP TABLE IF EXISTS attraction;
-
-CREATE TABLE attraction (
+CREATE TABLE IF NOT EXISTS attraction (
     attraction_id int auto_increment,
     primary key(attraction_id),
     nom varchar(255) not null,
     description varchar(255) not null,
     difficulte int,
-    visible bool default true
+    visible bool default true,
+    image_url varchar(500),
+    hauteur int,
+    vitesse int,
+    longueur int,
+    duree int,
+    annee_construction int
 );
 
-CREATE TABLE critique (
+CREATE TABLE IF NOT EXISTS critique (
     critique_id int auto_increment,
     primary key(critique_id),
     attraction_id int not null,
@@ -22,9 +25,7 @@ CREATE TABLE critique (
     foreign key (attraction_id) references attraction(attraction_id)
 );
 
-DROP TABLE IF EXISTS users;
-
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     users_id int auto_increment,
     primary key(users_id),
     name varchar(255) not null,

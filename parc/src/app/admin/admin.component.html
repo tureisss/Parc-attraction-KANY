@@ -1,43 +1,100 @@
-<mat-card>
+<mat-card class="admin-card">
   <mat-card-header>
-    <mat-card-title>Page administrateur pour <button mat-button (click)="addAttraction()">Ajouter</button>, modifier et supprimer des attractions</mat-card-title>
+    <mat-card-title i18n="@@adminTitle">Gestion des Attractions</mat-card-title>
+    <button mat-raised-button color="accent" (click)="addAttraction()" class="add-button" i18n="@@adminAddAttraction">
+      ➕ Ajouter une attraction
+    </button>
   </mat-card-header>
+
   <mat-card-content>
-    <div class="attraction-title">
-      <div class="attraction">
-        <span>Nom de l'attraction</span>
-        <span>Description de l'attraction</span>
-        <span>Difficulté de l'attraction / 5</span>
-        <span>Visible</span>
+    <!-- Section Attractions Existantes -->
+    <div class="section">
+      <h2 class="section-title" i18n="@@adminExisting">📋 Attractions Existantes</h2>
+      
+      <div class="attractions-grid" *ngIf="attractions | async">
+        <ng-container *ngFor="let formulaireAttraction of formulaireAttractions; let index = index"
+          [formGroup]="formulaireAttraction"
+        >
+          <mat-card class="attraction-card">
+            <mat-card-content>
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label i18n="@@name">Nom</mat-label>
+                  <input matInput formControlName="nom" placeholder="Nom de l'attraction" i18n-placeholder="@@adminNamePlaceholder">
+                </mat-form-field>
+              </div>
+
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label i18n="@@description">Description</mat-label>
+                  <input matInput formControlName="description" placeholder="Description" i18n-placeholder="@@adminDescriptionPlaceholder">
+                </mat-form-field>
+              </div>
+
+              <div class="form-field-wrapper">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label i18n="@@adminImageUrl">URL de l'image</mat-label>
+                  <input matInput formControlName="image_url" placeholder="https://example.com/image.jpg" i18n-placeholder="@@adminImageUrlPlaceholder">
+                </mat-form-field>
+              </div>
+
+              <div class="stats-section">
+                <h3 i18n="@@adminStatsTitle">📊 Statistiques</h3>
+                <div class="stats-grid">
+                  <mat-form-field appearance="outline">
+                    <mat-label i18n="@@adminHeight">Hauteur (m)</mat-label>
+                    <input matInput formControlName="hauteur" type="number" placeholder="50">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label i18n="@@adminSpeed">Vitesse (km/h)</mat-label>
+                    <input matInput formControlName="vitesse" type="number" placeholder="120">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label i18n="@@adminLength">Longueur (m)</mat-label>
+                    <input matInput formControlName="longueur" type="number" placeholder="1200">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label i18n="@@adminDuration">Durée (s)</mat-label>
+                    <input matInput formControlName="duree" type="number" placeholder="180">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label i18n="@@adminYear">Année de construction</mat-label>
+                    <input matInput formControlName="annee_construction" type="number" placeholder="2020">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <mat-form-field appearance="outline" class="field-small">
+                  <mat-label i18n="@@adminDifficultyLabel">Difficulté (1-5)</mat-label>
+                  <input matInput formControlName="difficulte" type="number" min="1" max="5">
+                </mat-form-field>
+
+                <mat-slide-toggle formControlName="visible" class="toggle-field">
+                  <span i18n="@@visible">Visible</span>
+                </mat-slide-toggle>
+              </div>
+
+              <div class="button-group">
+                <button mat-raised-button color="primary" (click)="onSubmit(formulaireAttraction)" i18n="@@save">
+                  ✅ Enregistrer
+                </button>
+                <button mat-raised-button color="warn" (click)="deleteAttraction(index)" i18n="@@delete">
+                  🗑️ Supprimer
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </ng-container>
+      </div>
+
+      <div *ngIf="(attractions | async)?.length === 0" class="empty-state">
+        <p i18n="@@adminEmpty">Aucune attraction trouvée</p>
       </div>
     </div>
-    <ng-container *ngIf="attractions | async">
-      <ng-container *ngFor="let formulaireAttraction of formulaireAttractions; let indexForm = index;"
-        [formGroup]="formulaireAttraction"
-        style="display: flex; flex-direction: column;"
-      >
-        <div class="attraction">
-          <mat-form-field class="champ" appearance="fill">
-            <mat-label>Nom</mat-label>
-            <input matInput formControlName="nom">
-          </mat-form-field>
-      
-          <mat-form-field class="champ" appearance="fill">
-            <mat-label>Description</mat-label>
-            <input matInput formControlName="description">
-          </mat-form-field>
-  
-          <mat-form-field class="champ" appearance="fill">
-            <mat-label>Difficulté / 5</mat-label>
-            <input matInput formControlName="difficulte" type="number">
-          </mat-form-field>
-
-          <mat-slide-toggle class="champ" formControlName="visible">Element visible</mat-slide-toggle>
-
-          <button mat-button (click)="onSubmit(formulaireAttraction)" class="champ">Enregistrer</button>
-        </div>
-      </ng-container>
-    </ng-container>
   </mat-card-content>
 </mat-card>
-

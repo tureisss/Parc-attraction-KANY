@@ -24,4 +24,9 @@ export class AttractionService {
     const data = this.dataService.postData(url, attraction);
     return data as Observable<MessageInterface>;
   }
+
+  public deleteAttraction(attractionId: number): Observable<MessageInterface> {
+    const url = `https://api/attraction/${attractionId}`;
+    return this.dataService.deleteData(url) as Observable<MessageInterface>;
+  }
 }

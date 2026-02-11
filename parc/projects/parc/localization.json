@@ -1,0 +1,7 @@
+{
+  "$schema": "../node_modules/@angular/localize/tools/src/schemas/localize.json",
+  "sourceLocale": "fr",
+  "locales": {
+    "en": "src/locale/messages.en.xlf"
+  }
+}

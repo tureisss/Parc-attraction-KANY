@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#134e5e"/>
+      <stop offset="100%" stop-color="#71b280"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <path d="M50 540 C 200 460, 360 620, 560 540 S 900 460, 1150 540" fill="none" stroke="#ffffff" stroke-width="8" opacity="0.7"/>
+  <circle cx="260" cy="520" r="14" fill="#dcedc8"/>
+  <circle cx="560" cy="540" r="14" fill="#dcedc8"/>
+  <circle cx="860" cy="520" r="14" fill="#dcedc8"/>
+  <text x="80" y="180" font-family="Quicksand, Arial, sans-serif" font-size="64" fill="#ffffff" font-weight="700">Jungle Vortex</text>
+  <text x="80" y="240" font-family="Quicksand, Arial, sans-serif" font-size="28" fill="#e8f5e9">Virages rapides</text>
+</svg>

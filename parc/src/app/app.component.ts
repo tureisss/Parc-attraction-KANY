@@ -15,13 +15,17 @@ import {MatButtonModule} from '@angular/material/button';
 export class AppComponent {
   title = 'parc';
 
-  constructor(public authService: AuthService, public router: Router) {
-    this.authService.setUser()
+  constructor(
+    public authService: AuthService,
+    public router: Router,
+  ) {
+    this.authService.setUser();
   }
 
   logout() {
-    this.authService.logout();
-    this.router.navigate(["/login"]);
+    this.authService.logout().subscribe(() => {
+      this.router.navigate(["/login"]);
+    });
   }
 
 }

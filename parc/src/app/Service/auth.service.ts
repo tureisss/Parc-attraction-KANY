@@ -18,7 +18,7 @@ export class AuthService {
 
   login(form: object): Observable<boolean> {
     return this.http.post<UserInterface>(
-      'https://api/login',
+        'https://api/connexion',
       {
         ...form,
       }
@@ -30,10 +30,14 @@ export class AuthService {
     }));
   }
 
-  logout(): void {
-    this.isLoggedIn = false;
-    this.user = null;
-    localStorage.setItem("user", "");
+  logout(): Observable<any> {
+    // Appelle l'API pour la déconnexion (stateless, mais pour cohérence)
+    return this.http.post<any>('https://api/deconnexion', {}).pipe(map(res => {
+      this.isLoggedIn = false;
+      this.user = null;
+      localStorage.setItem("user", "");
+      return res;
+    }));
   }
 
   setUser() {

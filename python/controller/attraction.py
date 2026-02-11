@@ -14,13 +14,21 @@ def add_attraction(data):
     if (not "visible" in data):
         data["visible"] = True
 
+    # Champs optionnels pour les statistiques
+    image_url = data.get("image_url", None)
+    hauteur = data.get("hauteur", None)
+    vitesse = data.get("vitesse", None)
+    longueur = data.get("longueur", None)
+    duree = data.get("duree", None)
+    annee_construction = data.get("annee_construction", None)
+
     if ("attraction_id" in data and data["attraction_id"]):
-      requete = f"UPDATE attraction SET nom='{data['nom']}', description='{data['description']}', difficulte={data['difficulte']}, visible={data['visible']} WHERE attraction_id = {data['attraction_id']}"
-      req.insert_in_db(requete)
+      requete = f"UPDATE attraction SET nom='{data['nom']}', description='{data['description']}', difficulte={data['difficulte']}, visible={data['visible']}, image_url=?, hauteur=?, vitesse=?, longueur=?, duree=?, annee_construction=? WHERE attraction_id = {data['attraction_id']}"
+      req.insert_in_db(requete, (image_url, hauteur, vitesse, longueur, duree, annee_construction))
       id = data['attraction_id']
     else:
-      requete = "INSERT INTO attraction (nom, description, difficulte, visible) VALUES (?, ?, ?, ?);"
-      id = req.insert_in_db(requete, (data["nom"], data["description"], data["difficulte"], data["visible"]))
+      requete = "INSERT INTO attraction (nom, description, difficulte, visible, image_url, hauteur, vitesse, longueur, duree, annee_construction) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+      id = req.insert_in_db(requete, (data["nom"], data["description"], data["difficulte"], data["visible"], image_url, hauteur, vitesse, longueur, duree, annee_construction))
 
     return id
 

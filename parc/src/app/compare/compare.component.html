@@ -1,0 +1,62 @@
+<div class="compare-container">
+  <header class="compare-header">
+    <h1 i18n="@@compareTitle">Comparateur d'attractions</h1>
+    <p i18n="@@compareSubtitle">Sélectionne deux coasters et compare leurs stats</p>
+  </header>
+
+  <div class="selectors">
+    <mat-form-field appearance="outline" class="selector">
+      <mat-label i18n="@@compareLeft">Attraction A</mat-label>
+      <mat-select [(ngModel)]="leftId">
+        <mat-option *ngFor="let attraction of attractions" [value]="attraction.attraction_id">
+          {{ attraction.nom }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="selector">
+      <mat-label i18n="@@compareRight">Attraction B</mat-label>
+      <mat-select [(ngModel)]="rightId">
+        <mat-option *ngFor="let attraction of attractions" [value]="attraction.attraction_id">
+          {{ attraction.nom }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="compare-grid" *ngIf="leftAttraction && rightAttraction">
+    <mat-card class="compare-card">
+      <div class="card-image" [style.background-image]="'url(' + (leftAttraction.image_url || 'https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?w=800') + ')'">
+        <div class="card-title">{{ leftAttraction.nom }}</div>
+      </div>
+      <div class="card-content">
+        <p class="desc">{{ leftAttraction.description }}</p>
+        <ul class="stats">
+          <li><span i18n="@@statHeight">Hauteur</span><strong>{{ leftAttraction.hauteur || '-' }} m</strong></li>
+          <li [ngClass]="{ 'highlight-green': isLeftWinner(leftAttraction.vitesse, rightAttraction?.vitesse) }"><span i18n="@@statSpeed">Vitesse</span><strong>{{ leftAttraction.vitesse || '-' }} km/h</strong></li>
+          <li [ngClass]="{ 'highlight-green': isLeftWinner(leftAttraction.longueur, rightAttraction?.longueur) }"><span i18n="@@statLength">Longueur</span><strong>{{ leftAttraction.longueur || '-' }} m</strong></li>
+          <li [ngClass]="{ 'highlight-green': isLeftWinner(leftAttraction.duree, rightAttraction?.duree) }"><span i18n="@@statDuration">Durée</span><strong>{{ leftAttraction.duree || '-' }} s</strong></li>
+          <li><span i18n="@@statYear">Ouvert en</span><strong>{{ leftAttraction.annee_construction || '-' }}</strong></li>
+          <li [ngClass]="{ 'highlight-green': isLeftWinner(leftAttraction.difficulte, rightAttraction?.difficulte) }"><span i18n="@@difficulty">Difficulté</span><strong>{{ leftAttraction.difficulte }}/5</strong></li>
+        </ul>
+      </div>
+    </mat-card>
+
+    <mat-card class="compare-card">
+      <div class="card-image" [style.background-image]="'url(' + (rightAttraction.image_url || 'https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?w=800') + ')'">
+        <div class="card-title">{{ rightAttraction.nom }}</div>
+      </div>
+      <div class="card-content">
+        <p class="desc">{{ rightAttraction.description }}</p>
+        <ul class="stats">
+          <li><span i18n="@@statHeight">Hauteur</span><strong>{{ rightAttraction.hauteur || '-' }} m</strong></li>
+          <li [ngClass]="{ 'highlight-green': isRightWinner(leftAttraction?.vitesse, rightAttraction.vitesse) }"><span i18n="@@statSpeed">Vitesse</span><strong>{{ rightAttraction.vitesse || '-' }} km/h</strong></li>
+          <li [ngClass]="{ 'highlight-green': isRightWinner(leftAttraction?.longueur, rightAttraction.longueur) }"><span i18n="@@statLength">Longueur</span><strong>{{ rightAttraction.longueur || '-' }} m</strong></li>
+          <li [ngClass]="{ 'highlight-green': isRightWinner(leftAttraction?.duree, rightAttraction.duree) }"><span i18n="@@statDuration">Durée</span><strong>{{ rightAttraction.duree || '-' }} s</strong></li>
+          <li><span i18n="@@statYear">Ouvert en</span><strong>{{ rightAttraction.annee_construction || '-' }}</strong></li>
+          <li [ngClass]="{ 'highlight-green': isRightWinner(leftAttraction?.difficulte, rightAttraction.difficulte) }"><span i18n="@@difficulty">Difficulté</span><strong>{{ rightAttraction.difficulte }}/5</strong></li>
+        </ul>
+      </div>
+    </mat-card>
+  </div>
+</div>

@@ -1,7 +1,37 @@
-.critique-form {
-  margin-bottom: 20px;
+.critique-item {
+  background: #e8f5e9;
+  border-radius: 14px;
+  margin: 16px 0;
+  padding: 16px 24px 8px 24px;
+  box-shadow: 0 2px 8px #a5d6a7aa;
+  border: 1.5px solid #c8e6c9;
 }
-
-.critique-list {
-  margin-top: 20px;
+.critique-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.etoiles {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.star {
+  font-size: 1.3rem;
+  color: #a5d6a7;
+  &.filled {
+    color: #388e3c;
+    text-shadow: 0 2px 8px #a5d6a755;
+  }
+}
+.critique-item p {
+  margin: 8px 0 0 0;
+  color: #33691e;
+}
+.critique-item hr {
+  border: none;
+  border-bottom: 1px solid #c8e6c9;
+  margin: 12px 0 0 0;
 }

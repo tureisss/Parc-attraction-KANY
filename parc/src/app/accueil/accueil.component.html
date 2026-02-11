@@ -1,22 +1,112 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Bienvenue sur le site internet du parc d'attraction</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <div class="attraction-title">
-      <div class="attraction">
-        <span>Nom de l'attraction</span>
-        <span>Description de l'attraction</span>
-        <span>Difficulté de l'attraction / 5</span>
-      </div>
-    </div>
+<div class="blog-container">
+  <header class="blog-header">
+    <h1 i18n="@@blogTitle">Attractions</h1>
+  </header>
+
+  <!-- Barre de filtres -->
+  <div class="filters-container">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label i18n="@@searchLabel">Rechercher une attraction</mat-label>
+      <input matInput [(ngModel)]="searchQuery" (ngModelChange)="onFilterChange()" placeholder="Nom, description..." i18n-placeholder="@@searchPlaceholder">
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="difficulty-field">
+      <mat-label i18n="@@difficultyLabel">Difficulté</mat-label>
+      <mat-select [(ngModel)]="selectedDifficulty" (ngModelChange)="onFilterChange()">
+        <mat-option [value]="null" i18n="@@allDifficulties">Toutes</mat-option>
+        <mat-option [value]="1">⭐</mat-option>
+        <mat-option [value]="2">⭐⭐</mat-option>
+        <mat-option [value]="3">⭐⭐⭐</mat-option>
+        <mat-option [value]="4">⭐⭐⭐⭐</mat-option>
+        <mat-option [value]="5">⭐⭐⭐⭐⭐</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="sort-field">
+      <mat-label i18n="@@sortLabel">Trier par</mat-label>
+      <mat-select [(ngModel)]="sortBy" (ngModelChange)="onFilterChange()">
+        <mat-option value="nom" i18n="@@sortName">Nom</mat-option>
+        <mat-option value="difficulte" i18n="@@sortDifficulty">Difficulté</mat-option>
+        <mat-option value="annee" i18n="@@sortYear">Année</mat-option>
+        <mat-option value="vitesse" i18n="@@sortSpeed">Vitesse max</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-stroked-button (click)="clearFilters()" class="clear-btn" i18n="@@clearFilters">
+      <mat-icon>clear</mat-icon> Réinitialiser
+    </button>
+  </div>
+
+  <div class="attractions-blog-grid">
     <ng-container *ngFor="let attraction of attractions | async;">
-      <div class="attraction">
-        <span>{{attraction.nom}}</span>
-        <span>{{attraction.description}}</span>
-        <span>{{attraction.difficulte}} / 5</span>
-      </div>
-      <app-critique [attractionId]="attraction.attraction_id"></app-critique>
+      <article class="blog-card">
+        <div class="card-image" [style.background-image]="'url(' + (attraction.image_url || 'https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?w=800') + ')'">
+          <div class="difficulty-badge">
+            <ng-container *ngFor="let star of [1,2,3,4,5]">
+              <span class="star" [class.filled]="star <= attraction.difficulte">⭐</span>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <h2 class="attraction-title">{{attraction.nom}}</h2>
+          <p class="attraction-description">{{attraction.description}}</p>
+
+          <div class="stats-container" *ngIf="attraction.hauteur || attraction.vitesse || attraction.longueur || attraction.duree">
+            <div class="stat" *ngIf="attraction.hauteur">
+              <span class="stat-icon"></span>
+              <div class="stat-info">
+                <span class="stat-value">{{attraction.hauteur}}m</span>
+                <span class="stat-label" i18n="@@statHeight">Hauteur</span>
+              </div>
+            </div>
+
+            <div class="stat" *ngIf="attraction.vitesse">
+              <span class="stat-icon"></span>
+              <div class="stat-info">
+                <span class="stat-value">{{attraction.vitesse}} km/h</span>
+                <span class="stat-label" i18n="@@statSpeed">Vitesse</span>
+              </div>
+            </div>
+
+            <div class="stat" *ngIf="attraction.longueur">
+              <span class="stat-icon"></span>
+              <div class="stat-info">
+                <span class="stat-value">{{attraction.longueur}}m</span>
+                <span class="stat-label" i18n="@@statLength">Longueur</span>
+              </div>
+            </div>
+
+            <div class="stat" *ngIf="attraction.duree">
+              <span class="stat-icon">⏱</span>
+              <div class="stat-info">
+                <span class="stat-value">{{attraction.duree}}s</span>
+                <span class="stat-label" i18n="@@statDuration">Durée</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="year-badge" *ngIf="attraction.annee_construction">
+            <span i18n="@@statYear">Ouvert en</span> {{attraction.annee_construction}}
+          </div>
+
+          <button mat-raised-button color="primary" class="view-reviews-btn" (click)="toggleCritiques(attraction.attraction_id)">
+            <ng-container *ngIf="attraction.attraction_id !== null && showCritiques[attraction.attraction_id!]; else showLabel" i18n="@@hideReviews">
+              Masquer les avis
+            </ng-container>
+            <ng-template #showLabel>
+              <span i18n="@@showReviews">Voir les avis</span>
+            </ng-template>
+          </button>
+        </div>
+
+        <ng-container *ngIf="attraction.attraction_id !== null && showCritiques[attraction.attraction_id!]">
+          <div class="reviews-section">
+            <app-critique [attractionId]="attraction.attraction_id"></app-critique>
+          </div>
+        </ng-container>
+      </article>
     </ng-container>
-  </mat-card-content>
-</mat-card>
+  </div>
+</div>

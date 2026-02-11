@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff9a9e"/>
+      <stop offset="100%" stop-color="#fad0c4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <path d="M70 560 C 220 500, 380 620, 560 560 S 900 500, 1140 560" fill="none" stroke="#ffffff" stroke-width="8" opacity="0.7"/>
+  <circle cx="280" cy="540" r="14" fill="#fff8e1"/>
+  <circle cx="560" cy="560" r="14" fill="#fff8e1"/>
+  <circle cx="860" cy="540" r="14" fill="#fff8e1"/>
+  <text x="80" y="180" font-family="Quicksand, Arial, sans-serif" font-size="64" fill="#ffffff" font-weight="700">Nova Kid</text>
+  <text x="80" y="240" font-family="Quicksand, Arial, sans-serif" font-size="28" fill="#fff3e0">Coaster junior</text>
+</svg>

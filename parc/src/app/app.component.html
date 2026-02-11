@@ -1,8 +1,17 @@
-<mat-toolbar>
-  <span><a routerLink="/accueil">Parc d'attraction</a></span>
-  <div *ngIf="authService.isLoggedIn">
-    <button mat-stroked-button (click)="logout()">Déconnexion</button>
+<header class="header-diagonal">
+  <div class="header-content">
+    <span class="header-title" routerLink="/" style="cursor: pointer;" i18n="@@appTitle">🎢 Parc d'attraction</span>
+    <div class="header-actions">
+      <a mat-stroked-button class="header-button" routerLink="/comparateur" i18n="@@compareTab">Comparateur</a>
+      <a mat-stroked-button class="header-button" href="/fr/">FR</a>
+      <a mat-stroked-button class="header-button" href="/en/">EN</a>
+      <button mat-raised-button color="accent" routerLink="/login" *ngIf="!authService.isLoggedIn" class="header-button login-button" i18n="@@loginAdmin">
+        🔐 Connexion Admin
+      </button>
+      <button mat-raised-button color="accent" (click)="logout()" *ngIf="authService.isLoggedIn" class="header-button" i18n="@@logout">
+        Déconnexion
+      </button>
+    </div>
   </div>
-</mat-toolbar>
-
+</header>
 <router-outlet></router-outlet>

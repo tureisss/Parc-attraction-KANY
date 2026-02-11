@@ -2,15 +2,20 @@ import mariadb
 import datetime
 
 def get_db_connection():
-    conn = mariadb.connect(
-        user="mysqlusr",
-        password="mysqlpwd",
-        host="database",
-        port=3306,
-        database="parc"
-    )
-    cur = conn.cursor()
-    return cur, conn
+    try:
+        conn = mariadb.connect(
+            user="mysqlusr",
+            password="mysqlpwd",
+            host="database",
+            port=3306,
+            database="parc"
+        )
+        cur = conn.cursor()
+        return cur, conn
+    except mariadb.Error as e:
+        print(f"Erreur lors de la connection à la base de données: {e}", flush=True)
+        # On lève une exception pour que Flask puisse retourner une erreur HTTP 500 propre
+        raise ConnectionError(f"Erreur lors de la connection à la base de données: {e}")
 
 def insert_in_db(requete, data=()):
     cur, conn = get_db_connection()
