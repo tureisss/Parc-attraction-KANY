@@ -1,37 +1,72 @@
 .critique-item {
-  background: #e8f5e9;
-  border-radius: 14px;
-  margin: 16px 0;
-  padding: 16px 24px 8px 24px;
-  box-shadow: 0 2px 8px #a5d6a7aa;
-  border: 1.5px solid #c8e6c9;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  margin: 20px 0;
+  padding: 24px;
+  // Ombre portée plus douce et bleutée
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.08);
+  border: 1px solid rgba(224, 231, 255, 0.5);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateX(8px); // Petit décalage élégant au survol
+    background: #ffffff;
+  }
 }
+
 .critique-header {
   display: flex;
   align-items: center;
+  justify-content: space-between; // Espace entre le nom et les étoiles
   gap: 16px;
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e293b;
 }
+
 .etoiles {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
+  background: #f1f5f9;
+  padding: 4px 12px;
+  border-radius: 12px;
 }
+
 .star {
-  font-size: 1.3rem;
-  color: #a5d6a7;
+  font-size: 1.2rem;
+  color: #cbd5e1; // Couleur des étoiles vides (gris clair)
+  transition: all 0.3s ease;
+
   &.filled {
-    color: #388e3c;
-    text-shadow: 0 2px 8px #a5d6a755;
+    color: #fbbf24; // Jaune ambre
+    filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.6));
   }
 }
+
 .critique-item p {
-  margin: 8px 0 0 0;
-  color: #33691e;
+  margin: 16px 0 0 0;
+  color: #475569;
+  line-height: 1.6;
+  font-style: italic;
+  font-size: 1rem;
+  position: relative;
+  padding-left: 20px;
+
+  // Ajout de petits guillemets décoratifs
+  &::before {
+    content: '"';
+    position: absolute;
+    left: 0;
+    top: -5px;
+    font-size: 2rem;
+    color: #cbd5e1;
+    font-family: serif;
+  }
 }
+
 .critique-item hr {
-  border: none;
-  border-bottom: 1px solid #c8e6c9;
-  margin: 12px 0 0 0;
+  display: none; // On cache la ligne pour un look plus moderne et aéré
 }

@@ -1,50 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap');
+
 .header-diagonal {
-  background: linear-gradient(90deg, #388e3c 0%, #81c784 100%);
+  // On remplace le vert par un dégradé moderne et profond
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   color: #fff;
-  position: relative;
+  position: sticky; // Le header reste en haut au scroll
+  top: 0;
+  z-index: 1000;
   padding: 0;
-  margin-bottom: 32px;
-  box-shadow: 0 2px 8px #388e3c22;
-  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-  border-bottom: 6px solid #c8e6c9;
+  margin-bottom: 40px;
+  
+  // Suppression du clip-path diagonal pour un look plus "App" moderne
+  // On ajoute une légère courbure en bas à la place
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  
+  box-shadow: 0 10px 30px rgba(79, 70, 229, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 28px 40px 36px 40px;
+  padding: 20px 48px;
   gap: 24px;
+  // Effet de brillance subtil sur le contenu
+  background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
 }
+
 .header-title {
-  font-size: 2.3rem;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-shadow: 1px 2px 8px #0002;
-  font-family: 'Quicksand', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  text-shadow: none; // On enlève l'ombre portée pour plus de clarté
   flex-shrink: 0;
+  
+  // Petit effet de lueur sur le titre
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
 }
+
 .header-actions {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   align-items: center;
   flex-wrap: wrap;
   justify-content: flex-end;
 }
+
 .header-button {
-  font-weight: 600;
-  border-radius: 24px;
-  box-shadow: 0 2px 8px #a5d6a7aa;
-  background: linear-gradient(90deg, #a5d6a7 0%, #81c784 100%) !important;
-  color: #2e7d32 !important;
-  border: none;
-  transition: all 0.3s ease;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 14px;
+  // Look translucide (Glass) pour les boutons secondaires
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(5px);
+  padding: 8px 20px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
-    box-shadow: 0 4px 12px #2e7d3244;
+    background: rgba(255, 255, 255, 0.25) !important;
     transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   }
 }
+
 .login-button {
-  background: linear-gradient(90deg, #4caf50 0%, #45a049 100%) !important;
-  color: #fff !important;
+  // Le bouton d'action principal doit ressortir
+  background: #fff !important;
+  color: #4f46e5 !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+
+  &:hover {
+    background: #f8fafc !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
+    transform: translateY(-2px) scale(1.03);
+  }
 }
