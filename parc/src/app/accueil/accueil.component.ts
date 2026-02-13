@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AttractionService } from '../Service/attraction.service';
 import { CommonModule } from '@angular/common';
-import { Observable, map } from 'rxjs';
+import { Observable, map, of } from 'rxjs'; // Ajout de 'of' pour simplifier onFilterChange
 import { AttractionInterface } from '../Interface/attraction.interface';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,7 +17,19 @@ import { MatChipsModule } from '@angular/material/chips';
 @Component({
   selector: 'app-accueil',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule, RouterModule, CritiqueComponent, FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatChipsModule],
+  imports: [
+    CommonModule, 
+    MatCardModule, 
+    MatIconModule, 
+    MatButtonModule, 
+    RouterModule, 
+    CritiqueComponent, 
+    FormsModule, 
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatSelectModule, 
+    MatChipsModule
+  ],
   templateUrl: './accueil.component.html',
   styleUrl: './accueil.component.scss'
 })
@@ -35,12 +47,25 @@ export class AccueilComponent {
     })
   );
   
-  // Map pour suivre l'état d'affichage des critiques par attraction
   public showCritiques: { [key: number]: boolean } = {};
 
   constructor(
     public attractionService: AttractionService
   ) {}
+
+  /**
+   * Transforme le nom de l'attraction pour correspondre au fichier SVG
+   * Exemple: "Silver Star" -> "silver-star"
+   */
+  getImageName(nom: string): string {
+    if (!nom) return 'default-coaster';
+    return nom
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, '-')            // Remplace les espaces par des tirets
+      .normalize("NFD")                // Décompose les caractères accentués
+      .replace(/[\u0300-\u036f]/g, ""); // Supprime les accents
+  }
 
   toggleCritiques(attractionId: number | null) {
     if (typeof attractionId !== 'number') return;
@@ -50,7 +75,6 @@ export class AccueilComponent {
   applyFilters(attractions: AttractionInterface[]): AttractionInterface[] {
     let filtered = [...attractions];
 
-    // Filtre par recherche
     if (this.searchQuery.trim()) {
       const query = this.searchQuery.toLowerCase();
       filtered = filtered.filter(a => 
@@ -59,12 +83,10 @@ export class AccueilComponent {
       );
     }
 
-    // Filtre par difficulté
     if (this.selectedDifficulty !== null) {
       filtered = filtered.filter(a => a.difficulte === this.selectedDifficulty);
     }
 
-    // Tri
     filtered.sort((a, b) => {
       switch (this.sortBy) {
         case 'nom':
@@ -84,10 +106,7 @@ export class AccueilComponent {
   }
 
   onFilterChange() {
-    this.attractions = new Observable(observer => {
-      observer.next(this.applyFilters(this.allAttractions));
-      observer.complete();
-    });
+    this.attractions = of(this.applyFilters(this.allAttractions));
   }
 
   clearFilters() {

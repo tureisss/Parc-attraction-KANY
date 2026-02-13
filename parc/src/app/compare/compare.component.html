@@ -14,6 +14,8 @@
       </mat-select>
     </mat-form-field>
 
+    <div class="vs-badge">VS</div>
+
     <mat-form-field appearance="outline" class="selector">
       <mat-label i18n="@@compareRight">Attraction B</mat-label>
       <mat-select [(ngModel)]="rightId">
@@ -25,37 +27,65 @@
   </div>
 
   <div class="compare-grid" *ngIf="leftAttraction && rightAttraction">
-    <mat-card class="compare-card">
-      <div class="card-image" [style.background-image]="'url(' + (leftAttraction.image_url || 'https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?w=800') + ')'">
-        <div class="card-title">{{ leftAttraction.nom }}</div>
+    <mat-card class="blog-card compare-card">
+      <div class="card-image" [style.background-image]="'url(assets/coasters/' + getImageName(leftAttraction.nom) + '.svg)'">
+        <div class="difficulty-badge">
+           <span class="star filled">⭐</span> {{ leftAttraction.difficulte }}/5
+        </div>
       </div>
       <div class="card-content">
-        <p class="desc">{{ leftAttraction.description }}</p>
-        <ul class="stats">
-          <li><span i18n="@@statHeight">Hauteur</span><strong>{{ leftAttraction.hauteur || '-' }} m</strong></li>
-          <li [ngClass]="{ 'highlight-green': isLeftWinner(leftAttraction.vitesse, rightAttraction?.vitesse) }"><span i18n="@@statSpeed">Vitesse</span><strong>{{ leftAttraction.vitesse || '-' }} km/h</strong></li>
-          <li [ngClass]="{ 'highlight-green': isLeftWinner(leftAttraction.longueur, rightAttraction?.longueur) }"><span i18n="@@statLength">Longueur</span><strong>{{ leftAttraction.longueur || '-' }} m</strong></li>
-          <li [ngClass]="{ 'highlight-green': isLeftWinner(leftAttraction.duree, rightAttraction?.duree) }"><span i18n="@@statDuration">Durée</span><strong>{{ leftAttraction.duree || '-' }} s</strong></li>
-          <li><span i18n="@@statYear">Ouvert en</span><strong>{{ leftAttraction.annee_construction || '-' }}</strong></li>
-          <li [ngClass]="{ 'highlight-green': isLeftWinner(leftAttraction.difficulte, rightAttraction?.difficulte) }"><span i18n="@@difficulty">Difficulté</span><strong>{{ leftAttraction.difficulte }}/5</strong></li>
-        </ul>
+        <h2 class="attraction-title">{{ leftAttraction.nom }}</h2>
+        <p class="attraction-description">{{ leftAttraction.description }}</p>
+        
+        <div class="stats-container-vertical">
+          <div class="stat-row" [class.winner]="isLeftWinner(leftAttraction.vitesse, rightAttraction.vitesse)">
+            <span class="stat-label" i18n="@@statSpeed">Vitesse</span>
+            <span class="stat-value">{{ leftAttraction.vitesse || '-' }} km/h</span>
+          </div>
+          <div class="stat-row" [class.winner]="isLeftWinner(leftAttraction.longueur, rightAttraction.longueur)">
+            <span class="stat-label" i18n="@@statLength">Longueur</span>
+            <span class="stat-value">{{ leftAttraction.longueur || '-' }} m</span>
+          </div>
+          <div class="stat-row" [class.winner]="isLeftWinner(leftAttraction.hauteur, rightAttraction.hauteur)">
+            <span class="stat-label" i18n="@@statHeight">Hauteur</span>
+            <span class="stat-value">{{ leftAttraction.hauteur || '-' }} m</span>
+          </div>
+          <div class="stat-row" [class.winner]="isLeftWinner(leftAttraction.duree, rightAttraction.duree)">
+            <span class="stat-label" i18n="@@statDuration">Durée</span>
+            <span class="stat-value">{{ leftAttraction.duree || '-' }} s</span>
+          </div>
+        </div>
       </div>
     </mat-card>
 
-    <mat-card class="compare-card">
-      <div class="card-image" [style.background-image]="'url(' + (rightAttraction.image_url || 'https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?w=800') + ')'">
-        <div class="card-title">{{ rightAttraction.nom }}</div>
+    <mat-card class="blog-card compare-card">
+      <div class="card-image" [style.background-image]="'url(assets/coasters/' + getImageName(rightAttraction.nom) + '.svg)'">
+        <div class="difficulty-badge">
+           <span class="star filled">⭐</span> {{ rightAttraction.difficulte }}/5
+        </div>
       </div>
       <div class="card-content">
-        <p class="desc">{{ rightAttraction.description }}</p>
-        <ul class="stats">
-          <li><span i18n="@@statHeight">Hauteur</span><strong>{{ rightAttraction.hauteur || '-' }} m</strong></li>
-          <li [ngClass]="{ 'highlight-green': isRightWinner(leftAttraction?.vitesse, rightAttraction.vitesse) }"><span i18n="@@statSpeed">Vitesse</span><strong>{{ rightAttraction.vitesse || '-' }} km/h</strong></li>
-          <li [ngClass]="{ 'highlight-green': isRightWinner(leftAttraction?.longueur, rightAttraction.longueur) }"><span i18n="@@statLength">Longueur</span><strong>{{ rightAttraction.longueur || '-' }} m</strong></li>
-          <li [ngClass]="{ 'highlight-green': isRightWinner(leftAttraction?.duree, rightAttraction.duree) }"><span i18n="@@statDuration">Durée</span><strong>{{ rightAttraction.duree || '-' }} s</strong></li>
-          <li><span i18n="@@statYear">Ouvert en</span><strong>{{ rightAttraction.annee_construction || '-' }}</strong></li>
-          <li [ngClass]="{ 'highlight-green': isRightWinner(leftAttraction?.difficulte, rightAttraction.difficulte) }"><span i18n="@@difficulty">Difficulté</span><strong>{{ rightAttraction.difficulte }}/5</strong></li>
-        </ul>
+        <h2 class="attraction-title">{{ rightAttraction.nom }}</h2>
+        <p class="attraction-description">{{ rightAttraction.description }}</p>
+        
+        <div class="stats-container-vertical">
+          <div class="stat-row" [class.winner]="isRightWinner(leftAttraction.vitesse, rightAttraction.vitesse)">
+            <span class="stat-label" i18n="@@statSpeed">Vitesse</span>
+            <span class="stat-value">{{ rightAttraction.vitesse || '-' }} km/h</span>
+          </div>
+          <div class="stat-row" [class.winner]="isRightWinner(leftAttraction.longueur, rightAttraction.longueur)">
+            <span class="stat-label" i18n="@@statLength">Longueur</span>
+            <span class="stat-value">{{ rightAttraction.longueur || '-' }} m</span>
+          </div>
+          <div class="stat-row" [class.winner]="isRightWinner(leftAttraction.hauteur, rightAttraction.hauteur)">
+            <span class="stat-label" i18n="@@statHeight">Hauteur</span>
+            <span class="stat-value">{{ rightAttraction.hauteur || '-' }} m</span>
+          </div>
+          <div class="stat-row" [class.winner]="isRightWinner(leftAttraction.duree, rightAttraction.duree)">
+            <span class="stat-label" i18n="@@statDuration">Durée</span>
+            <span class="stat-value">{{ rightAttraction.duree || '-' }} s</span>
+          </div>
+        </div>
       </div>
     </mat-card>
   </div>

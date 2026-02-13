@@ -1,9 +1,9 @@
 <div class="blog-container">
   <header class="blog-header">
     <h1 i18n="@@blogTitle">Attractions</h1>
+    <p i18n="@@blogSubtitle">Découvrez des sensations fortes inoubliables</p>
   </header>
 
-  <!-- Barre de filtres -->
   <div class="filters-container">
     <mat-form-field appearance="outline" class="search-field">
       <mat-label i18n="@@searchLabel">Rechercher une attraction</mat-label>
@@ -33,15 +33,16 @@
       </mat-select>
     </mat-form-field>
 
-    <button mat-stroked-button (click)="clearFilters()" class="clear-btn" i18n="@@clearFilters">
-      <mat-icon>clear</mat-icon> Réinitialiser
+    <button mat-flat-button (click)="clearFilters()" class="clear-btn" i18n="@@clearFilters">
+      <mat-icon>clear_all</mat-icon> Réinitialiser
     </button>
   </div>
 
   <div class="attractions-blog-grid">
     <ng-container *ngFor="let attraction of attractions | async;">
       <article class="blog-card">
-        <div class="card-image" [style.background-image]="'url(' + (attraction.image_url || 'https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?w=800') + ')'">
+        <div class="card-image" 
+             [style.background-image]="'url(assets/coasters/' + getImageName(attraction.nom) + '.svg)'">
           <div class="difficulty-badge">
             <ng-container *ngFor="let star of [1,2,3,4,5]">
               <span class="star" [class.filled]="star <= attraction.difficulte">⭐</span>
@@ -55,7 +56,7 @@
 
           <div class="stats-container" *ngIf="attraction.hauteur || attraction.vitesse || attraction.longueur || attraction.duree">
             <div class="stat" *ngIf="attraction.hauteur">
-              <span class="stat-icon"></span>
+              <span class="stat-icon">🏔️</span>
               <div class="stat-info">
                 <span class="stat-value">{{attraction.hauteur}}m</span>
                 <span class="stat-label" i18n="@@statHeight">Hauteur</span>
@@ -63,7 +64,7 @@
             </div>
 
             <div class="stat" *ngIf="attraction.vitesse">
-              <span class="stat-icon"></span>
+              <span class="stat-icon">⚡</span>
               <div class="stat-info">
                 <span class="stat-value">{{attraction.vitesse}} km/h</span>
                 <span class="stat-label" i18n="@@statSpeed">Vitesse</span>
@@ -71,7 +72,7 @@
             </div>
 
             <div class="stat" *ngIf="attraction.longueur">
-              <span class="stat-icon"></span>
+              <span class="stat-icon">🛤️</span>
               <div class="stat-info">
                 <span class="stat-value">{{attraction.longueur}}m</span>
                 <span class="stat-label" i18n="@@statLength">Longueur</span>
@@ -79,7 +80,7 @@
             </div>
 
             <div class="stat" *ngIf="attraction.duree">
-              <span class="stat-icon">⏱</span>
+              <span class="stat-icon">⏱️</span>
               <div class="stat-info">
                 <span class="stat-value">{{attraction.duree}}s</span>
                 <span class="stat-label" i18n="@@statDuration">Durée</span>

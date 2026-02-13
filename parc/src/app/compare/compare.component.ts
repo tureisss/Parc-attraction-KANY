@@ -31,6 +31,19 @@ export class CompareComponent implements OnInit {
     });
   }
 
+  /**
+   * Génère le nom du fichier SVG à partir du nom de l'attraction
+   */
+  getImageName(nom: string | undefined): string {
+    if (!nom) return 'default-coaster';
+    return nom
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, '-')
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  }
+
   get leftAttraction(): AttractionInterface | undefined {
     return this.attractions.find(a => a.attraction_id === this.leftId);
   }
@@ -39,13 +52,20 @@ export class CompareComponent implements OnInit {
     return this.attractions.find(a => a.attraction_id === this.rightId);
   }
 
+  /**
+   * Détermine si la valeur de gauche est supérieure à celle de droite
+   * Gère les types null/undefined pour éviter les erreurs de compilation
+   */
   isLeftWinner(leftValue: number | null | undefined, rightValue: number | null | undefined): boolean {
-    if (!leftValue || !rightValue) return false;
+    if (leftValue === null || leftValue === undefined || rightValue === null || rightValue === undefined) return false;
     return leftValue > rightValue;
   }
 
+  /**
+   * Détermine si la valeur de droite est supérieure à celle de gauche
+   */
   isRightWinner(leftValue: number | null | undefined, rightValue: number | null | undefined): boolean {
-    if (!leftValue || !rightValue) return false;
+    if (leftValue === null || leftValue === undefined || rightValue === null || rightValue === undefined) return false;
     return rightValue > leftValue;
   }
 }
